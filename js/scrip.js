@@ -1,4 +1,6 @@
 let btn = document.querySelector('button');
+let input = document.querySelector('input');
+
 function cargarCiudad(ciudad) {
   $.getJSON(
     `https://api.openweathermap.org/data/2.5/weather?q=${ciudad}&appid=95176c8edea30e33338e0eaddd53a916&units=metric&lang=es`,
@@ -25,8 +27,8 @@ function cargarCiudad(ciudad) {
 }
 
 btn.addEventListener('click', function () {
-  let ciudad = document.querySelector('input').value;
-  if (isNaN(ciudad)) {
+  let ciudad = input.value;
+  if (ciudad.trim() !== '') {
     cargarCiudad(ciudad);
   } else {
     alert('No has ingresado ninguna ciudad');
@@ -34,5 +36,12 @@ btn.addEventListener('click', function () {
 });
 
 function inputVacio() {
-  document.querySelector('input').value = '';
+  input.value = '';
 }
+
+input.addEventListener('keydown', function (enter) {
+  let ciudad = input.value;
+  if (enter.key === 'Enter' && ciudad.trim() !== '') {
+    cargarCiudad(ciudad);
+  }
+});
